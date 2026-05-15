@@ -7,6 +7,10 @@ import ValidationSection from "./sections/ValidationSection";
 import ArraySection from "./sections/ArraySection";
 import ObjectSection from "./sections/ObjectSection";
 import ColorSection from "./sections/ColorSection";
+import SecuritySection from "./sections/SecuritySection";
+import MathSection from "./sections/MathSection";
+import UrlSection from "./sections/UrlSection";
+import PerformanceSection from "./sections/PerformanceSection";
 
 const categories = [
   { id: "string", label: "String", emoji: "🧵" },
@@ -16,6 +20,10 @@ const categories = [
   { id: "array", label: "Array", emoji: "🔗" },
   { id: "object", label: "Object", emoji: "🔧" },
   { id: "color", label: "Color", emoji: "🎨" },
+  { id: "security", label: "Security", emoji: "🔐" },
+  { id: "math", label: "Math", emoji: "🧮" },
+  { id: "url", label: "URL", emoji: "🌍" },
+  { id: "performance", label: "Performance", emoji: "⏱️" },
 ];
 
 export default function App() {
@@ -79,6 +87,10 @@ export default function App() {
         {active === "array" && <ArraySection />}
         {active === "object" && <ObjectSection />}
         {active === "color" && <ColorSection />}
+        {active === "security" && <SecuritySection />}
+        {active === "math" && <MathSection />}
+        {active === "url" && <UrlSection />}
+        {active === "performance" && <PerformanceSection />}
       </main>
     </div>
   );
