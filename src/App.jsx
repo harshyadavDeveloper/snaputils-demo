@@ -83,6 +83,11 @@ export default function App() {
             style={{ color: "#64748b", fontSize: "12px", textDecoration: "none" }}>
             🐙 GitHub
           </a>
+          <a href="https://github.com/harshyadavDeveloper/snaputils/discussions"
+            target="_blank" rel="noreferrer"
+            style={{ color: "#64748b", fontSize: "12px", textDecoration: "none" }}>
+            💬 Discussions
+          </a>
         </div>
       </aside>
 
