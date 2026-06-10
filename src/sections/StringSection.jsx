@@ -1,15 +1,5 @@
 import { useState } from "react";
-import {
-    capitalize,
-    truncate,
-    toCamelCase,
-    maskString,
-    wordCount,
-    toTitleCase,
-    isPalindrome,
-    countOccurrences,
-    reverseString,
-} from "@dungeonmaster/snaputils";
+import { capitalize, truncate, toCamelCase, maskString, wordCount, toTitleCase, isPalindrome, countOccurrences, reverseString, slugify, stripHTML, extractEmails, extractURLs } from "@dungeonmaster/snaputils";
 
 const Card = ({ title, children }) => (
     <div style={{
@@ -64,6 +54,8 @@ export default function StringSection() {
     const [str4, setStr4] = useState("racecar");
     const [str5, setStr5] = useState("hello world hello");
     const [substr, setSubstr] = useState("hello");
+    const [emailText, setEmailText] = useState("contact a@b.com or support@example.com");
+    const [urlText, setUrlText] = useState("visit https://google.com or https://github.com");
 
     return (
         <div>
@@ -103,6 +95,26 @@ export default function StringSection() {
                 <Input value={str5} onChange={setStr5} placeholder="Main string..." />
                 <Input value={substr} onChange={setSubstr} placeholder="Substring to count..." />
                 <Output label="countOccurrences()" value={countOccurrences(str5, substr)} />
+            </Card>
+
+            <Card title="slugify()">
+                <Input value={str1} onChange={setStr1} placeholder="Type something..." />
+                <Output label="slugify()" value={slugify(str1)} />
+            </Card>
+
+            <Card title="stripHTML()">
+                <Input value={str2} onChange={setStr2} placeholder="Type HTML string..." />
+                <Output label="stripHTML()" value={stripHTML(str2)} />
+            </Card>
+
+            <Card title="extractEmails()">
+                <Input value={emailText} onChange={setEmailText} placeholder="Type text with emails..." />
+                <Output label="extractEmails()" value={extractEmails(emailText).join(", ") || "none found"} />
+            </Card>
+
+            <Card title="extractURLs()">
+                <Input value={urlText} onChange={setUrlText} placeholder="Type text with URLs..." />
+                <Output label="extractURLs()" value={extractURLs(urlText).join(", ") || "none found"} />
             </Card>
         </div>
     );

@@ -11,6 +11,9 @@ import SecuritySection from "./sections/SecuritySection";
 import MathSection from "./sections/MathSection";
 import UrlSection from "./sections/UrlSection";
 import PerformanceSection from "./sections/PerformanceSection";
+import FormValidationSection from "./sections/FormValidationSection";
+import StorageSection from "./sections/StorageSection";
+import HooksSection from "./sections/HooksSection";
 
 const categories = [
   { id: "string", label: "String", emoji: "🧵" },
@@ -24,6 +27,11 @@ const categories = [
   { id: "math", label: "Math", emoji: "🧮" },
   { id: "url", label: "URL", emoji: "🌍" },
   { id: "performance", label: "Performance", emoji: "⏱️" },
+  { id: "formvalidation", label: "Form Validation", emoji: "📝" },
+  { id: "storage", label: "Storage", emoji: "🗃️" } ,
+  { id: "hooks", label: "Hooks", emoji: "🪝" } 
+  
+
 ];
 
 export default function App() {
@@ -91,6 +99,9 @@ export default function App() {
         {active === "math" && <MathSection />}
         {active === "url" && <UrlSection />}
         {active === "performance" && <PerformanceSection />}
+        {active === "formvalidation" && <FormValidationSection />}
+        {active === "storage" && <StorageSection />}
+        {active === "hooks" && <HooksSection />}
       </main>
     </div>
   );

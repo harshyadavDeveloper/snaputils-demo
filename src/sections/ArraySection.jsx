@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { unique, groupBy, chunk } from "@dungeonmaster/snaputils";
+import { unique, groupBy, chunk, flatten, shuffle, difference, intersection } from "@dungeonmaster/snaputils";
 
 const Card = ({ title, children }) => (
   <div style={{
@@ -45,6 +45,11 @@ export default function ArraySection() {
     { name: "Diana", department: "Design" },
     { name: "Eve", department: "Marketing" },
   ];
+  const [flatInput, setFlatInput] = useState([1, [2, [3, [4]]]]);
+  const [shuffleInput, setShuffleInput] = useState("1, 2, 3, 4, 5");
+  const [shuffled, setShuffled] = useState([]);
+  const [arr1Input, setArr1Input] = useState("1, 2, 3, 4");
+  const [arr2Input, setArr2Input] = useState("2, 3, 5, 6");
 
   return (
     <div>
@@ -122,6 +127,49 @@ export default function ArraySection() {
         </p>
         <Output label="Input array:" value={people} />
         <Output label='groupBy(arr, "department"):' value={groupBy(people, "department")} />
+      </Card>
+
+      <Card title="flatten() — Flatten nested arrays">
+        <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>
+          Enter a nested array as JSON:
+        </p>
+        <input
+          defaultValue="[1, [2, [3, [4]]]]"
+          onChange={(e) => {
+            try { setFlatInput(JSON.parse(e.target.value)); } catch (err) { console.log(err) }
+          }}
+          style={{ background: "#0f172a", border: "1px solid #334155", borderRadius: "8px", padding: "10px 14px", color: "#e2e8f0", fontSize: "14px", width: "100%", outline: "none", marginBottom: "12px", fontFamily: "monospace" }}
+        />
+        <Output label="flatten(arr):" value={flatten(flatInput)} />
+        <Output label="flatten(arr, 1):" value={flatten(flatInput, 1)} />
+        <Output label="flatten(arr, 2):" value={flatten(flatInput, 2)} />
+      </Card>
+
+      <Card title="shuffle() — Shuffle an array randomly">
+        <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>
+          Enter comma separated values:
+        </p>
+        <input
+          value={shuffleInput}
+          onChange={(e) => setShuffleInput(e.target.value)}
+          style={{ background: "#0f172a", border: "1px solid #334155", borderRadius: "8px", padding: "10px 14px", color: "#e2e8f0", fontSize: "14px", width: "100%", outline: "none", marginBottom: "12px" }}
+        />
+        <button onClick={() => setShuffled(shuffle(shuffleInput.split(",").map(s => s.trim())))}
+          style={{ background: "#6366f1", color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", cursor: "pointer", fontSize: "14px", fontWeight: "600" }}>
+          Shuffle!
+        </button>
+        {shuffled.length > 0 && <Output label="shuffle():" value={shuffled} />}
+      </Card>
+
+      <Card title="difference() / intersection()">
+        <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>Array 1:</p>
+        <input value={arr1Input} onChange={(e) => setArr1Input(e.target.value)}
+          style={{ background: "#0f172a", border: "1px solid #334155", borderRadius: "8px", padding: "10px 14px", color: "#e2e8f0", fontSize: "14px", width: "100%", outline: "none", marginBottom: "12px" }} />
+        <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>Array 2:</p>
+        <input value={arr2Input} onChange={(e) => setArr2Input(e.target.value)}
+          style={{ background: "#0f172a", border: "1px solid #334155", borderRadius: "8px", padding: "10px 14px", color: "#e2e8f0", fontSize: "14px", width: "100%", outline: "none", marginBottom: "12px" }} />
+        <Output label="difference():" value={difference(arr1Input.split(",").map(s => s.trim()), arr2Input.split(",").map(s => s.trim()))} />
+        <Output label="intersection():" value={intersection(arr1Input.split(",").map(s => s.trim()), arr2Input.split(",").map(s => s.trim()))} />
       </Card>
     </div>
   );
