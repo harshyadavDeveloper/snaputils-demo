@@ -103,9 +103,9 @@ export default function FormValidationSection() {
         <Examples
           examples={locale === "US" ? ["90210", "10001", "12345"] :
             locale === "IN" ? ["400001", "110001", "12345"] :
-            locale === "UK" ? ["SW1A 1AA", "EC1A 1BB", "12345"] :
-            locale === "CA" ? ["K1A 0B1", "M5V 2T6", "12345"] :
-            ["2000", "3000", "12345"]}
+              locale === "UK" ? ["SW1A 1AA", "EC1A 1BB", "12345"] :
+                locale === "CA" ? ["K1A 0B1", "M5V 2T6", "12345"] :
+                  ["2000", "3000", "12345"]}
           onClick={setPostal}
         />
       </Card>

@@ -28,9 +28,9 @@ const categories = [
   { id: "url", label: "URL", emoji: "🌍" },
   { id: "performance", label: "Performance", emoji: "⏱️" },
   { id: "formvalidation", label: "Form Validation", emoji: "📝" },
-  { id: "storage", label: "Storage", emoji: "🗃️" } ,
-  { id: "hooks", label: "Hooks", emoji: "🪝" } 
-  
+  { id: "storage", label: "Storage", emoji: "🗃️" },
+  { id: "hooks", label: "Hooks", emoji: "🪝" }
+
 
 ];
 
