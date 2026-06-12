@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  hexToRgb,
-  rgbToHex,
-  isValidHex,
-  lightenColor,
-  darkenColor,
-} from "@dungeonmaster/snaputils";
+import { hexToRgb, rgbToHex, isValidHex, lightenColor, darkenColor, generateRandomColor, getContrastColor, hexToHsl, hslToHex } from "@dungeonmaster/snaputils";
 
 const Card = ({ title, children }) => (
   <div style={{
@@ -63,6 +57,8 @@ export default function ColorSection() {
   const [r, setR] = useState("99");
   const [g, setG] = useState("102");
   const [b, setB] = useState("241");
+  const [randomColor, setRandomColor] = useState(generateRandomColor());
+  const [hslHex, setHslHex] = useState("#6366f1");
 
   const rgb = hexToRgb(hex);
   const valid = isValidHex(hexInput);
@@ -199,6 +195,46 @@ export default function ColorSection() {
             }}>{ex}</button>
           ))}
         </div>
+      </Card>
+
+      <Card title="generateRandomColor() / getContrastColor()">
+        <button onClick={() => setRandomColor(generateRandomColor())} style={{
+          background: "#6366f1", color: "#fff", border: "none", borderRadius: "8px",
+          padding: "10px 20px", cursor: "pointer", fontSize: "14px", fontWeight: "600", marginBottom: "16px"
+        }}>
+          Generate Random Color
+        </button>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
+          <div style={{ width: "60px", height: "60px", borderRadius: "8px", background: randomColor, border: "1px solid #334155" }} />
+          <div>
+            <p style={{ color: "#e2e8f0", fontFamily: "monospace", fontSize: "14px" }}>{randomColor}</p>
+            <p style={{ color: "#64748b", fontSize: "12px", marginTop: "4px" }}>Contrast color:</p>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "4px" }}>
+              <div style={{ width: "24px", height: "24px", borderRadius: "4px", background: getContrastColor(randomColor), border: "1px solid #334155" }} />
+              <span style={{ color: "#34d399", fontFamily: "monospace", fontSize: "13px" }}>{getContrastColor(randomColor)}</span>
+            </div>
+          </div>
+        </div>
+        <div style={{ background: randomColor, borderRadius: "8px", padding: "16px", textAlign: "center" }}>
+          <p style={{ color: getContrastColor(randomColor), fontWeight: "600", fontSize: "16px" }}>
+            This text uses getContrastColor() for readability!
+          </p>
+        </div>
+      </Card>
+
+      <Card title="hexToHsl() / hslToHex()">
+        <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>Pick a color:</p>
+        <div style={{ display: "flex", gap: "12px", alignItems: "center", marginBottom: "12px" }}>
+          <input type="color" value={hslHex} onChange={(e) => setHslHex(e.target.value)}
+            style={{ width: "48px", height: "48px", borderRadius: "8px", border: "1px solid #334155", background: "none", cursor: "pointer" }} />
+          <span style={{ color: "#e2e8f0", fontFamily: "monospace" }}>{hslHex}</span>
+        </div>
+        {hexToHsl(hslHex) && <>
+          <Output label="hexToHsl() h" value={hexToHsl(hslHex).h + "°"} />
+          <Output label="hexToHsl() s" value={hexToHsl(hslHex).s + "%"} />
+          <Output label="hexToHsl() l" value={hexToHsl(hslHex).l + "%"} />
+          <Output label="hslToHex() roundtrip" value={hslToHex(hexToHsl(hslHex).h, hexToHsl(hslHex).s, hexToHsl(hslHex).l)} />
+        </>}
       </Card>
     </div>
   );

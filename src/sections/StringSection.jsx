@@ -1,6 +1,10 @@
 import { useState } from "react";
-import { capitalize, truncate, toCamelCase, maskString, wordCount, toTitleCase, isPalindrome, countOccurrences, reverseString, slugify, stripHTML, extractEmails, extractURLs } from "@dungeonmaster/snaputils";
-
+import {
+    capitalize, truncate, toCamelCase, maskString, wordCount,
+    toTitleCase, isPalindrome, countOccurrences, reverseString,
+    slugify, stripHTML, extractEmails, extractURLs,
+    generatePassword, initials, pluralize,
+} from "@dungeonmaster/snaputils";
 const Card = ({ title, children }) => (
     <div style={{
         background: "#1e293b",
@@ -56,6 +60,12 @@ export default function StringSection() {
     const [substr, setSubstr] = useState("hello");
     const [emailText, setEmailText] = useState("contact a@b.com or support@example.com");
     const [urlText, setUrlText] = useState("visit https://google.com or https://github.com");
+    const [passwordLength, setPasswordLength] = useState("12");
+    const [password, setPassword] = useState(generatePassword());
+    const [initialsInput, setInitialsInput] = useState("Harsh Yadav");
+    const [pluralWord, setPluralWord] = useState("item");
+    const [pluralCount, setPluralCount] = useState("2");
+    const [pluralCustom, setPluralCustom] = useState("");
 
     return (
         <div>
@@ -115,6 +125,64 @@ export default function StringSection() {
             <Card title="extractURLs()">
                 <Input value={urlText} onChange={setUrlText} placeholder="Type text with URLs..." />
                 <Output label="extractURLs()" value={extractURLs(urlText).join(", ") || "none found"} />
+            </Card>
+
+            <Card title="generatePassword()">
+                <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>Password Length:</p>
+                <input type="number" value={passwordLength} onChange={(e) => setPasswordLength(e.target.value)} min="8" max="32"
+                    style={{ background: "#0f172a", border: "1px solid #334155", borderRadius: "8px", padding: "10px 14px", color: "#e2e8f0", fontSize: "14px", width: "100%", outline: "none", marginBottom: "12px" }} />
+                <button onClick={() => setPassword(generatePassword(Number(passwordLength)))} style={{
+                    background: "#6366f1", color: "#fff", border: "none", borderRadius: "8px",
+                    padding: "10px 20px", cursor: "pointer", fontSize: "14px", fontWeight: "600",
+                }}>
+                    Generate Password
+                </button>
+                <Output label="generatePassword()" value={password} />
+            </Card>
+
+            <Card title="initials()">
+                <Input value={initialsInput} onChange={setInitialsInput} placeholder="Enter a full name..." />
+                <Output label="initials()" value={initials(initialsInput)} />
+                <div style={{ marginTop: "16px" }}>
+                    <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>Try these:</p>
+                    {["Harsh Yadav", "John Doe Smith", "Elon Musk", "A B C D"].map((ex) => (
+                        <button key={ex} onClick={() => setInitialsInput(ex)} style={{
+                            background: "#0f172a", color: "#94a3b8", border: "1px solid #334155",
+                            borderRadius: "6px", padding: "4px 10px", cursor: "pointer", fontSize: "12px",
+                            marginRight: "8px", marginBottom: "8px",
+                        }}>{ex}</button>
+                    ))}
+                </div>
+            </Card>
+
+            <Card title="pluralize()">
+                <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>Word:</p>
+                <Input value={pluralWord} onChange={setPluralWord} placeholder="e.g. item" />
+                <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>Count:</p>
+                <input type="number" value={pluralCount} onChange={(e) => setPluralCount(e.target.value)}
+                    style={{ background: "#0f172a", border: "1px solid #334155", borderRadius: "8px", padding: "10px 14px", color: "#e2e8f0", fontSize: "14px", width: "100%", outline: "none", marginBottom: "12px" }} />
+                <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>Custom plural (optional):</p>
+                <Input value={pluralCustom} onChange={setPluralCustom} placeholder="e.g. people, children" />
+                <Output label="pluralize()" value={pluralize(pluralWord, Number(pluralCount), pluralCustom || undefined)} />
+                <div style={{ marginTop: "16px" }}>
+                    <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>Try these:</p>
+                    {[
+                        { word: "item", count: 1 },
+                        { word: "item", count: 5 },
+                        { word: "person", count: 3, custom: "people" },
+                        { word: "child", count: 2, custom: "children" },
+                    ].map((ex) => (
+                        <button key={`${ex.word}${ex.count}`} onClick={() => {
+                            setPluralWord(ex.word);
+                            setPluralCount(String(ex.count));
+                            setPluralCustom(ex.custom || "");
+                        }} style={{
+                            background: "#0f172a", color: "#94a3b8", border: "1px solid #334155",
+                            borderRadius: "6px", padding: "4px 10px", cursor: "pointer", fontSize: "12px",
+                            marginRight: "8px", marginBottom: "8px",
+                        }}>{ex.count} {ex.word}</button>
+                    ))}
+                </div>
             </Card>
         </div>
     );

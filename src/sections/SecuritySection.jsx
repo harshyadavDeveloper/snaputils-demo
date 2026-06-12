@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { generateUID, hashString, base64Encode, base64Decode } from "@dungeonmaster/snaputils";
+import { generateUID, hashString, base64Encode, base64Decode, generateOTP, encryptString, decryptString } from "@dungeonmaster/snaputils";
 
 const Card = ({ title, children }) => (
     <div style={{
@@ -29,6 +29,12 @@ export default function SecuritySection() {
     const [hashInput, setHashInput] = useState("hello world");
     const [encodeInput, setEncodeInput] = useState("hello");
     const [decodeInput, setDecodeInput] = useState("aGVsbG8=");
+    const [otpLength, setOtpLength] = useState("6");
+    const [otp, setOtp] = useState(generateOTP());
+    const [encryptInput, setEncryptInput] = useState("hello world");
+    const [encryptKey, setEncryptKey] = useState("mykey");
+    const [encrypted, setEncrypted] = useState("");
+    const [decrypted, setDecrypted] = useState("");
 
     return (
         <div>
@@ -58,6 +64,35 @@ export default function SecuritySection() {
             <Card title="base64Decode()">
                 <Input value={decodeInput} onChange={setDecodeInput} placeholder="Base64 to decode..." />
                 <Output label="base64Decode()" value={base64Decode(decodeInput)} />
+            </Card>
+
+            <Card title="generateOTP()">
+                <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>OTP Length:</p>
+                <input type="number" value={otpLength} onChange={(e) => setOtpLength(e.target.value)} min="4" max="10"
+                    style={{ background: "#0f172a", border: "1px solid #334155", borderRadius: "8px", padding: "10px 14px", color: "#e2e8f0", fontSize: "14px", width: "100%", outline: "none", marginBottom: "12px" }} />
+                <button onClick={() => setOtp(generateOTP(Number(otpLength)))}
+                    style={{ background: "#6366f1", color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", cursor: "pointer", fontSize: "14px", fontWeight: "600" }}>
+                    Generate OTP
+                </button>
+                <Output label="generateOTP()" value={otp} />
+            </Card>
+
+            <Card title="encryptString() / decryptString()">
+                <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>Text to encrypt:</p>
+                <Input value={encryptInput} onChange={setEncryptInput} placeholder="Enter text..." />
+                <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>Key:</p>
+                <Input value={encryptKey} onChange={setEncryptKey} placeholder="Enter key..." />
+                <button onClick={() => {
+                    const enc = encryptString(encryptInput, encryptKey);
+                    setEncrypted(enc);
+                    setDecrypted(decryptString(enc, encryptKey));
+                }} style={{ background: "#6366f1", color: "#fff", border: "none", borderRadius: "8px", padding: "10px 20px", cursor: "pointer", fontSize: "14px", fontWeight: "600" }}>
+                    Encrypt & Decrypt
+                </button>
+                {encrypted && <>
+                    <Output label="encryptString()" value={encrypted.slice(0, 30) + "..."} />
+                    <Output label="decryptString()" value={decrypted} />
+                </>}
             </Card>
         </div>
     );

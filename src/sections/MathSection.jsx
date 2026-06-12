@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { sum, average, median, factorial, min, max } from "@dungeonmaster/snaputils";
+import { sum, average, median, factorial, min, max, percentage, lerp, degreesToRadians, radiansToDegrees } from "@dungeonmaster/snaputils";
 
 const Card = ({ title, children }) => (
     <div style={{
@@ -21,6 +21,13 @@ const Output = ({ label, value }) => (
 export default function MathSection() {
     const [arrInput, setArrInput] = useState("3, 1, 4, 1, 5, 9, 2, 6");
     const [factInput, setFactInput] = useState("5");
+    const [percentValue, setPercentValue] = useState("25");
+    const [percentTotal, setPercentTotal] = useState("200");
+    const [lerpStart, setLerpStart] = useState("0");
+    const [lerpEnd, setLerpEnd] = useState("100");
+    const [lerpT, setLerpT] = useState("0.5");
+    const [degrees, setDegrees] = useState("180");
+    const [radians, setRadians] = useState("3.14159");
 
     const parseArr = (str) =>
         str.split(",").map((s) => Number(s.trim())).filter((n) => !isNaN(n));
@@ -59,6 +66,44 @@ export default function MathSection() {
                         }}>{n}!</button>
                     ))}
                 </div>
+            </Card>
+
+            <Card title="percentage()">
+                <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>Value:</p>
+                <input type="number" value={percentValue} onChange={(e) => setPercentValue(e.target.value)}
+                    style={{ background: "#0f172a", border: "1px solid #334155", borderRadius: "8px", padding: "10px 14px", color: "#e2e8f0", fontSize: "14px", width: "100%", outline: "none", marginBottom: "12px" }} />
+                <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>Total:</p>
+                <input type="number" value={percentTotal} onChange={(e) => setPercentTotal(e.target.value)}
+                    style={{ background: "#0f172a", border: "1px solid #334155", borderRadius: "8px", padding: "10px 14px", color: "#e2e8f0", fontSize: "14px", width: "100%", outline: "none", marginBottom: "12px" }} />
+                <Output label="percentage()" value={percentage(Number(percentValue), Number(percentTotal)) + "%"} />
+                <div style={{ background: "#0f172a", borderRadius: "8px", padding: "8px", marginTop: "12px" }}>
+                    <div style={{ background: "#6366f1", borderRadius: "4px", height: "8px", width: `${Math.min(percentage(Number(percentValue), Number(percentTotal)), 100)}%`, transition: "width 0.3s" }} />
+                </div>
+            </Card>
+
+            <Card title="lerp() — Linear Interpolation">
+                <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>Start:</p>
+                <input type="number" value={lerpStart} onChange={(e) => setLerpStart(e.target.value)}
+                    style={{ background: "#0f172a", border: "1px solid #334155", borderRadius: "8px", padding: "10px 14px", color: "#e2e8f0", fontSize: "14px", width: "100%", outline: "none", marginBottom: "12px" }} />
+                <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>End:</p>
+                <input type="number" value={lerpEnd} onChange={(e) => setLerpEnd(e.target.value)}
+                    style={{ background: "#0f172a", border: "1px solid #334155", borderRadius: "8px", padding: "10px 14px", color: "#e2e8f0", fontSize: "14px", width: "100%", outline: "none", marginBottom: "12px" }} />
+                <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>T (0 to 1):</p>
+                <input type="range" min="0" max="1" step="0.01" value={lerpT} onChange={(e) => setLerpT(e.target.value)}
+                    style={{ width: "100%", marginBottom: "12px", accentColor: "#6366f1" }} />
+                <Output label={`lerp(${lerpStart}, ${lerpEnd}, ${lerpT})`} value={lerp(Number(lerpStart), Number(lerpEnd), Number(lerpT))} />
+            </Card>
+
+            <Card title="degreesToRadians() / radiansToDegrees()">
+                <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>Degrees:</p>
+                <input type="number" value={degrees} onChange={(e) => setDegrees(e.target.value)}
+                    style={{ background: "#0f172a", border: "1px solid #334155", borderRadius: "8px", padding: "10px 14px", color: "#e2e8f0", fontSize: "14px", width: "100%", outline: "none", marginBottom: "12px" }} />
+                <Output label="degreesToRadians()" value={degreesToRadians(Number(degrees)).toFixed(6)} />
+
+                <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px", marginTop: "16px" }}>Radians:</p>
+                <input type="number" value={radians} onChange={(e) => setRadians(e.target.value)}
+                    style={{ background: "#0f172a", border: "1px solid #334155", borderRadius: "8px", padding: "10px 14px", color: "#e2e8f0", fontSize: "14px", width: "100%", outline: "none", marginBottom: "12px" }} />
+                <Output label="radiansToDegrees()" value={radiansToDegrees(Number(radians)).toFixed(6)} />
             </Card>
         </div>
     );
