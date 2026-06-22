@@ -121,12 +121,16 @@ export default function ArraySection() {
         <Output label={`chunk(arr, ${chunkSize}):`} value={chunk(parseArr(chunkInput), Number(chunkSize))} />
       </Card>
 
-      <Card title="groupBy() — Group objects by key">
+      <Card title="groupBy() — Group objects by key or function">
         <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "12px" }}>
-          Grouping this array by <code style={{ color: "#6366f1" }}>department</code>:
+          Grouping by <code style={{ color: "#6366f1" }}>department</code> string key:
         </p>
         <Output label="Input array:" value={people} />
         <Output label='groupBy(arr, "department"):' value={groupBy(people, "department")} />
+        <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "12px", marginTop: "16px" }}>
+          Grouping numbers by <code style={{ color: "#6366f1" }}>even/odd</code> function:
+        </p>
+        <Output label="groupBy([1..6], fn):" value={groupBy([1, 2, 3, 4, 5, 6], n => n % 2 === 0 ? "even" : "odd")} />
       </Card>
 
       <Card title="flatten() — Flatten nested arrays">

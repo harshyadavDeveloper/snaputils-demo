@@ -59,6 +59,7 @@ export default function ColorSection() {
   const [b, setB] = useState("241");
   const [randomColor, setRandomColor] = useState(generateRandomColor());
   const [hslHex, setHslHex] = useState("#6366f1");
+  const [contrastRgb, setContrastRgb] = useState({ r: 99, g: 102, b: 241 });
 
   const rgb = hexToRgb(hex);
   const valid = isValidHex(hexInput);
@@ -219,6 +220,12 @@ export default function ColorSection() {
           <p style={{ color: getContrastColor(randomColor), fontWeight: "600", fontSize: "16px" }}>
             This text uses getContrastColor() for readability!
           </p>
+        </div>
+        <div style={{ marginTop: "16px" }}>
+          <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>RGB input:</p>
+          <Output label="getContrastColor(rgb)" value={getContrastColor({ r: 99, g: 102, b: 241 })} />
+          <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px", marginTop: "8px" }}>HSL input:</p>
+          <Output label="getContrastColor(hsl)" value={getContrastColor({ h: 239, s: 84, l: 58 })} />
         </div>
       </Card>
 

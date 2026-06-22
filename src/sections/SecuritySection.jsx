@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { generateUID, hashString, base64Encode, base64Decode, generateOTP, encryptString, decryptString } from "@dungeonmaster/snaputils";
-
 const Card = ({ title, children }) => (
     <div style={{
         background: "#1e293b", borderRadius: "12px", padding: "20px",
@@ -53,7 +52,9 @@ export default function SecuritySection() {
 
             <Card title="hashString()">
                 <Input value={hashInput} onChange={setHashInput} placeholder="Type something to hash..." />
-                <Output label="hashString()" value={hashString(hashInput)} />
+                <Output label="hashString(djb2)" value={hashString(hashInput, "djb2")} />
+                <Output label="hashString(sdbm)" value={hashString(hashInput, "sdbm")} />
+                <Output label="hashString(lose)" value={hashString(hashInput, "lose")} />
             </Card>
 
             <Card title="base64Encode()">

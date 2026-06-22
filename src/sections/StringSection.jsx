@@ -86,14 +86,17 @@ export default function StringSection() {
             <Card title="truncate()">
                 <Input value={str2} onChange={setStr2} placeholder="Type a long string..." />
                 <Output label="truncate(str, 10)" value={truncate(str2, 10)} />
-                <Output label="truncate(str, 15)" value={truncate(str2, 15)} />
-                <Output label="truncate(str, 20)" value={truncate(str2, 20)} />
+                <Output label="truncate(str, 15, {position:'middle'})" value={truncate(str2, 15, { position: "middle" })} />
+                <Output label="truncate(str, 15, {position:'start'})" value={truncate(str2, 15, { position: "start" })} />
+                <Output label="truncate(str, 10, {suffix:'--'})" value={truncate(str2, 10, { suffix: "--" })} />
             </Card>
 
             <Card title="maskString()">
                 <Input value={str3} onChange={setStr3} placeholder="e.g. credit card number" />
                 <Output label="maskString(str, 2, 2)" value={maskString(str3, 2, 2)} />
-                <Output label="maskString(str, 4, 4)" value={maskString(str3, 4, 4)} />
+                <Output label="maskString(str, 4, 0, {reveal:'start'})" value={maskString(str3, 4, 0, { reveal: "start" })} />
+                <Output label="maskString(str, 0, 4, {reveal:'end'})" value={maskString(str3, 0, 4, { reveal: "end" })} />
+                <Output label="maskString(str, 2, 2, {maskChar:'#'})" value={maskString(str3, 2, 2, { maskChar: "#" })} />
             </Card>
 
             <Card title="isPalindrome()">

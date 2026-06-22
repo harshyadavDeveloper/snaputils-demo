@@ -77,7 +77,9 @@ export default function NumberSection() {
         <Output label="USD" value={formatCurrency(Number(amount), "USD", "en-US")} />
         <Output label="INR" value={formatCurrency(Number(amount), "INR", "en-IN")} />
         <Output label="EUR" value={formatCurrency(Number(amount), "EUR", "de-DE")} />
-        <Output label="GBP" value={formatCurrency(Number(amount), "GBP", "en-GB")} />
+        <Output label="USD compact" value={formatCurrency(Number(amount), "USD", "en-US", { compact: true })} />
+        <Output label="USD 0 decimals" value={formatCurrency(Number(amount), "USD", "en-US", { decimals: 0 })} />
+        <Output label="USD 3 decimals" value={formatCurrency(Number(amount), "USD", "en-US", { decimals: 3 })} />
       </Card>
 
       <Card title="formatNumber / abbreviateNumber / isEven / isOdd">
@@ -101,21 +103,25 @@ export default function NumberSection() {
       </Card>
 
       <Card title="randomBetween()">
-        <button
-          onClick={() => setRandom(randomBetween(1, 100))}
-          style={{
-            background: "#6366f1",
-            color: "#fff",
-            border: "none",
-            borderRadius: "8px",
-            padding: "10px 20px",
-            cursor: "pointer",
-            fontSize: "14px",
-            fontWeight: "600",
-          }}>
-          Generate random number (1-100)
+        <button onClick={() => setRandom(randomBetween(1, 100))} style={{
+          background: "#6366f1", color: "#fff", border: "none", borderRadius: "8px",
+          padding: "10px 20px", cursor: "pointer", fontSize: "14px", fontWeight: "600", marginBottom: "8px", marginRight: "8px"
+        }}>
+          Integer (1-100)
         </button>
-        {random !== null && <Output label="randomBetween(1, 100)" value={random} />}
+        <button onClick={() => setRandom(randomBetween(1, 100, { float: true, decimals: 2 }))} style={{
+          background: "#6366f1", color: "#fff", border: "none", borderRadius: "8px",
+          padding: "10px 20px", cursor: "pointer", fontSize: "14px", fontWeight: "600", marginBottom: "8px", marginRight: "8px"
+        }}>
+          Float (1-100)
+        </button>
+        <button onClick={() => setRandom(randomBetween(1, 10, { exclude: [3, 4, 5] }))} style={{
+          background: "#6366f1", color: "#fff", border: "none", borderRadius: "8px",
+          padding: "10px 20px", cursor: "pointer", fontSize: "14px", fontWeight: "600", marginBottom: "8px"
+        }}>
+          Exclude [3,4,5]
+        </button>
+        {random !== null && <Output label="randomBetween()" value={random} />}
       </Card>
     </div>
   );

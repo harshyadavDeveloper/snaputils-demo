@@ -64,7 +64,15 @@ export default function FormValidationSection() {
 
       <Card title="isStrongPassword()">
         <Input value={password} onChange={setPassword} placeholder="Enter a password..." type="text" />
-        <ValidOutput label="isStrongPassword()" value={isStrongPassword(password)} />
+        <ValidOutput label="isStrongPassword()" value={isStrongPassword(password, { returnBoolean: true })} />
+        {!isStrongPassword(password, { returnBoolean: true }) && (
+          <div style={{ marginTop: "12px" }}>
+            <p style={{ color: "#64748b", fontSize: "12px", marginBottom: "8px" }}>Issues:</p>
+            {isStrongPassword(password).errors.map((err) => (
+              <p key={err} style={{ color: "#f87171", fontSize: "13px", marginBottom: "4px" }}>❌ {err}</p>
+            ))}
+          </div>
+        )}
         <p style={{ color: "#64748b", fontSize: "12px", marginTop: "8px" }}>
           Rules: min 8 chars, uppercase, lowercase, number, special char (@$!%*?&)
         </p>

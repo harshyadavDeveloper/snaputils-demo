@@ -76,7 +76,10 @@ export default function DateSection() {
 
             <Card title="formatDate / formatShortDate / getDayName / getMonthName">
                 <Input value={date1} onChange={setDate1} />
-                <Output label="formatDate()" value={formatDate(date1)} />
+                <Output label='formatDate("short")' value={formatDate(date1, "en-US", "short")} />
+                <Output label='formatDate("long")' value={formatDate(date1, "en-US", "long")} />
+                <Output label='formatDate("full")' value={formatDate(date1, "en-US", "full")} />
+                <Output label='formatDate("numeric")' value={formatDate(date1, "en-US", "numeric")} />
                 <Output label="formatShortDate()" value={formatShortDate(date1)} />
                 <Output label="getDayName()" value={getDayName(date1)} />
                 <Output label="getMonthName()" value={getMonthName(date1)} />
